@@ -1,7 +1,7 @@
 {
   "name": "node_protoc_2",
   "version": "1.0.0",
-  "description": "Compile int64 to string when generating static code for Node.js from protobuf",
+  "description": "Compile int64 to string when generating static code for protobuf in JavaScript",
   "bin": "bin.js",
   "main": "lib/index.js",
   "scripts": {
@@ -29,7 +29,8 @@
     "grpc-tools": "^1.10.0",
     "lodash": "^4.17.21",
     "tmp": "^0.2.1",
-    "ts-protoc-gen": "^0.14.0"
+    "ts-protoc-gen": "^0.14.0",
+    "yargs": "^16.2.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.0.1",

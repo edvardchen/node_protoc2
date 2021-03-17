@@ -11,6 +11,9 @@ type Options = {
   proto_path?: string;
 };
 
+/**
+ * main
+ */
 export default async ({ proto_files, out_dir, proto_path }: Options) => {
   const dir = await promisify(tmp.dir)();
 
@@ -44,13 +47,13 @@ async function compile({ proto_files, out_dir, proto_path }: Options) {
   const GRPC_TOOLS_PATH = require.resolve('grpc-tools/bin/protoc.js');
   const args = [
     GRPC_TOOLS_PATH,
-    `--proto_path=${proto_path}`,
+    proto_path && `--proto_path=${proto_path}`,
     `--plugin="protoc-gen-ts=${PROTOC_GEN_TS_PATH}"`,
     `--js_out="import_style=commonjs,binary:${out_dir}"`,
     `--ts_out="service=grpc-node,mode=grpc-js:${out_dir}"`,
     `--grpc_out="grpc_js:${out_dir}"`,
     ...proto_files,
-  ];
+  ].filter(Boolean);
   const command = args.join(' ');
   log(`ready to run: ${command}`);
   return new Promise((resolve, reject) => {
