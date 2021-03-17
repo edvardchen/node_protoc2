@@ -5,6 +5,9 @@ service Greeter {
   rpc SayHello(HelloRequest) returns (HelloReply) {}
 }
 
-message HelloRequest { string name = 1; }
+message HelloRequest {
+  string name = 1;
+  uint64 id = 2;
+}
 
 message HelloReply { string message = 1; }
