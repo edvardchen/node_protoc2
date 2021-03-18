@@ -5,6 +5,7 @@
   "bin": "bin.js",
   "main": "lib/index.js",
   "scripts": {
+    "prepare": "husky install",
     "test": "jest",
     "build": "tsc",
     "prebuild": "npm run lint",
@@ -51,13 +52,6 @@
     "prettier": "^2.2.1",
     "ts-jest": "^26.5.3",
     "typescript": "^4.2.3"
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-push": "npm t",
-      "pre-commit": "lint-staged"
-    }
   },
   "lint-staged": {
     "*.{ts,tsx,js,json}": [
