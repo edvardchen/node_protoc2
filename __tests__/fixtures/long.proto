@@ -7,6 +7,9 @@ service Greeter {
 
 message HelloRequest {
   int64 id = 2;
+  sint64 S64 = 4;
+  fixed64 F64 = 5;
+  sfixed64 SF64 = 6;
   string name = 1;
 }
 

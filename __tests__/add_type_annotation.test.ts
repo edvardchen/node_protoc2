@@ -10,9 +10,11 @@ describe('add type annotation', () => {
       path.resolve(__dirname, './fixtures/long.proto'),
       target
     );
-    expect(fs.readFileSync(target, { encoding: 'utf8' })).toContain(
-      'int64 id = 2 [jstype = JS_STRING];'
-    );
+    const content = fs.readFileSync(target, { encoding: 'utf8' });
+    expect(content).toContain('int64 id = 2 [jstype = JS_STRING];');
+    expect(content).toContain('sint64 S64 = 4 [jstype = JS_STRING];');
+    expect(content).toContain('fixed64 F64 = 5 [jstype = JS_STRING];');
+    expect(content).toContain('sfixed64 SF64 = 6 [jstype = JS_STRING];');
   });
   it('long field in one line bracket', async () => {
     const target = tmp.fileSync().name;
@@ -20,8 +22,9 @@ describe('add type annotation', () => {
       path.resolve(__dirname, './fixtures/long_one_line_bracket.proto'),
       target
     );
-    expect(fs.readFileSync(target, { encoding: 'utf8' })).toContain(
-      'message HelloRequest { int64 id = 2 [jstype = JS_STRING]; }'
+    const content = fs.readFileSync(target, { encoding: 'utf8' });
+    expect(content).toContain(
+      '{ int64 id = 2 [jstype = JS_STRING]; sint64 foo = 3 [jstype = JS_STRING]; }'
     );
   });
 });
