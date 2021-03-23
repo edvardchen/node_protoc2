@@ -1,4 +1,4 @@
-# node_protoc_2
+# node_protoc2
 
 Wrap [grpc-tools](https://github.com/grpc/grpc-node/tree/master/packages/grpc-tools) with additional ability that compile protobuf 64-int types to string automatically
 
