@@ -10,7 +10,7 @@ import compile from '.';
 //   ...
 // out_dir required, default value just to pass type-checking
 const { proto_path, out_dir = '', _: files } = yargs
-  .usage('node_protoc_2 --out-dir output_folder foo.proto')
+  .usage('node_protoc2 --out_dir output_folder foo.proto')
   .demandCommand(1, 'no protobuf files specified')
   .option('proto_path', {
     alias: 'I',

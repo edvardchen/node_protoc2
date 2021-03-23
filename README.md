@@ -25,7 +25,7 @@ So, I wrote this tool to make it easy.
 You can generate static codes in JavaScript from `.proto` files through the following command:
 
 ```bash
-npx node_protoc2 --out-dir output_folder foo.proto
+npx node_protoc2 --out_dir output_folder foo.proto
 ```
 
 All proto `64-int` types would be compiled into JavaScript `string` type
