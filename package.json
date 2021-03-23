@@ -4,6 +4,9 @@
   "description": "Compile int64 to string when generating static code for protobuf in JavaScript",
   "bin": "bin.js",
   "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "prepare": "husky install",
     "test": "jest",
