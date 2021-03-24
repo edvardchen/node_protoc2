@@ -1,4 +1,5 @@
 import { exec } from 'child_process';
+import globby from 'globby';
 import addTypeAnnotation from './utils/add_type_annotation';
 import tmp from 'tmp';
 import { promisify } from 'util';
@@ -11,20 +12,32 @@ type Options = {
   proto_path?: string;
 };
 
+function tempPath(temp_dir: string, file: string, proto_path?: string) {
+  return path.join(temp_dir, path.relative(proto_path || '.', file));
+}
+
 /**
  * main
  */
 export default async ({ proto_files, out_dir, proto_path }: Options) => {
   const dir = await promisify(tmp.dir)();
 
-  const jobs = proto_files
-    .map((file) => ({
-      original: file,
-      target: path.join(dir, path.relative(proto_path || '.', file)),
-    }))
-    .map(({ original, target }) =>
-      addTypeAnnotation(original, target).then(() => target)
-    );
+  if (proto_path) {
+    for await (const file of globby.stream(
+      path.join(proto_path, '/**/*.proto')
+    )) {
+      await addTypeAnnotation(
+        file as string,
+        tempPath(dir, file as string, proto_path)
+      );
+    }
+  }
+
+  const jobs = proto_files.map(async (file) => {
+    const target = tempPath(dir, file, proto_path);
+    await addTypeAnnotation(file, target);
+    return target;
+  });
 
   const files = await Promise.all(jobs);
 

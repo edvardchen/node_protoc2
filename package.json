@@ -30,6 +30,7 @@
   "dependencies": {
     "byline": "^5.0.0",
     "debug": "^4.3.1",
+    "globby": "^11.0.3",
     "grpc-tools": "^1.10.0",
     "lodash": "^4.17.21",
     "tmp": "^0.2.1",

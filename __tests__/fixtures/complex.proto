@@ -1,0 +1,7 @@
+// greeter.proto
+syntax = "proto3";
+import "greeter.proto";
+
+service Greeter {
+  rpc SayHello(greeter.HelloRequest) returns (greeter.HelloReply) {}
+}

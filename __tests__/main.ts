@@ -10,4 +10,12 @@ describe('node_protoc_2', () => {
       out_dir: fixturePath + '/.generated',
     });
   });
+
+  it('proto import another', async () => {
+    await compile({
+      proto_files: [path.resolve(fixturePath, './complex.proto')],
+      proto_path: fixturePath,
+      out_dir: fixturePath + '/.generated',
+    });
+  });
 });
