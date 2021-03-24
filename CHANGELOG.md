@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/edvardchen/node_protoc2/compare/v1.1.1...v1.2.0) (2021-03-24)
+
+
+### Features
+
+* support protobuf import ([1dda817](https://github.com/edvardchen/node_protoc2/commit/1dda817293a60c1eab8a9cebe6894d5dc0c816be))
+
 ### [1.1.1](https://github.com/edvardchen/node_protoc2/compare/v1.1.0...v1.1.1) (2021-03-23)
 
 
