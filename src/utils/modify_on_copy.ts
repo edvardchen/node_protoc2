@@ -13,7 +13,7 @@ const qPipeline = promisify(pipeline);
 export default async function modifyOnCopy(
   original: string,
   target: string,
-  transform: NonNullable<TransformOptions['transform']>
+  transforms: NonNullable<TransformOptions['transform']>[]
 ) {
   await fs.promises.mkdir(path.dirname(target), { recursive: true });
 
@@ -21,16 +21,19 @@ export default async function modifyOnCopy(
     createReadStream(original, { encoding: 'utf8' }),
     // I'm a lazy man, just use the 3rd library to read stream line by line
     new LineStream(),
-    new Transform({
-      decodeStrings: false,
-      transform(chunk, enc, callback) {
-        transform.call(this, chunk, enc, (error, data) => {
-          // FIXME: maybe \n not proper for all OS
-          // restore line separator
-          callback(error, data && data + '\n');
-        });
-      },
-    }),
+    ...transforms.map(
+      (transform) =>
+        new Transform({
+          decodeStrings: false,
+          transform(chunk, enc, callback) {
+            transform.call(this, chunk, enc, (error, data) => {
+              // FIXME: maybe \n not proper for all OS
+              // restore line separator
+              callback(error, data && data + '\n');
+            });
+          },
+        })
+    ),
     createWriteStream(target)
   );
 }

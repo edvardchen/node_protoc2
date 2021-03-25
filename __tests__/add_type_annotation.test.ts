@@ -1,4 +1,5 @@
 import addTypeAnnotation from '../src/utils/add_type_annotation';
+import modifyOnCopy from '../src/utils/modify_on_copy';
 import path from 'path';
 import tmp from 'tmp';
 import fs from 'fs';
@@ -6,9 +7,10 @@ import fs from 'fs';
 describe('add type annotation', () => {
   it('long field', async () => {
     const target = tmp.fileSync().name;
-    await addTypeAnnotation(
+    await modifyOnCopy(
       path.resolve(__dirname, './fixtures/long.proto'),
-      target
+      target,
+      [addTypeAnnotation]
     );
     const content = fs.readFileSync(target, { encoding: 'utf8' });
     expect(content).toContain('int64 id = 2 [jstype = JS_STRING];');
@@ -18,9 +20,10 @@ describe('add type annotation', () => {
   });
   it('long field in one line bracket', async () => {
     const target = tmp.fileSync().name;
-    await addTypeAnnotation(
+    await modifyOnCopy(
       path.resolve(__dirname, './fixtures/long_one_line_bracket.proto'),
-      target
+      target,
+      [addTypeAnnotation]
     );
     const content = fs.readFileSync(target, { encoding: 'utf8' });
     expect(content).toContain(

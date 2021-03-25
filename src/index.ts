@@ -6,6 +6,7 @@ import { promisify } from 'util';
 import path from 'path';
 import { debug, info } from './utils/log';
 import fs from 'fs';
+import modifyOnCopy from './utils/modify_on_copy';
 
 type Options = {
   legacy_grpc?: boolean;
@@ -16,6 +17,10 @@ type Options = {
 
 function tempPath(temp_dir: string, file: string, proto_path?: string) {
   return path.join(temp_dir, path.relative(proto_path || '.', file));
+}
+
+async function job(original: string, target: string) {
+  await modifyOnCopy(original, target, [addTypeAnnotation]);
 }
 
 /**
@@ -40,7 +45,7 @@ export default async ({
       const file = item as string;
       modified.add(path.resolve(file));
       debug(`moving ${file}`);
-      await addTypeAnnotation(
+      await job(
         await fs.promises.realpath(file),
         tempPath(dir, file, proto_path)
       );
@@ -52,7 +57,7 @@ export default async ({
     if (modified.has(path.resolve(file))) {
       debug(`skip moving ${file}`);
     } else {
-      await addTypeAnnotation(file, target);
+      await job(file, target);
     }
     return target;
   });
