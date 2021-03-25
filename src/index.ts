@@ -4,7 +4,7 @@ import addTypeAnnotation from './utils/add_type_annotation';
 import tmp from 'tmp';
 import { promisify } from 'util';
 import path from 'path';
-import log from './utils/log';
+import { debug, info } from './utils/log';
 
 type Options = {
   legacy_grpc?: boolean;
@@ -28,20 +28,25 @@ export default async ({
 }: Options) => {
   const dir = await promisify(tmp.dir)();
 
+  const modified = new Set();
+
   if (proto_path) {
-    for await (const file of globby.stream(
+    for await (const item of globby.stream(
       path.join(proto_path, '/**/*.proto')
     )) {
-      await addTypeAnnotation(
-        file as string,
-        tempPath(dir, file as string, proto_path)
-      );
+      const file = item as string;
+      modified.add(path.resolve(file));
+      await addTypeAnnotation(file, tempPath(dir, file, proto_path));
     }
   }
 
   const jobs = proto_files.map(async (file) => {
     const target = tempPath(dir, file, proto_path);
-    await addTypeAnnotation(file, target);
+    if (modified.has(path.resolve(file))) {
+      debug(`skip moving ${file}`);
+    } else {
+      await addTypeAnnotation(file, target);
+    }
     return target;
   });
 
@@ -82,7 +87,7 @@ async function compile({
     ...proto_files,
   ].filter(Boolean);
   const command = args.join(' ');
-  log(`ready to run: ${command}`);
+  info(`ready to run: ${command}`);
   return new Promise((resolve, reject) => {
     const child_proc = exec(command, (error) => {
       error ? reject(error) : resolve(undefined);

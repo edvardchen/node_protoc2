@@ -1,5 +1,5 @@
-import debug from 'debug';
+import Debug from 'debug';
 
-const log = debug('node_protoc2');
-
-export default log;
+const PREFIX = 'node_protoc2';
+export const debug = Debug(`${PREFIX}:debug`);
+export const info = Debug(`${PREFIX}:info`);
