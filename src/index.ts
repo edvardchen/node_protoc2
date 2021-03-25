@@ -5,6 +5,7 @@ import tmp from 'tmp';
 import { promisify } from 'util';
 import path from 'path';
 import { debug, info } from './utils/log';
+import fs from 'fs';
 
 type Options = {
   legacy_grpc?: boolean;
@@ -28,6 +29,8 @@ export default async ({
 }: Options) => {
   const dir = await promisify(tmp.dir)();
 
+  debug(`temp folder is ${dir}`);
+
   const modified = new Set();
 
   if (proto_path) {
@@ -36,7 +39,11 @@ export default async ({
     )) {
       const file = item as string;
       modified.add(path.resolve(file));
-      await addTypeAnnotation(file, tempPath(dir, file, proto_path));
+      debug(`moving ${file}`);
+      await addTypeAnnotation(
+        await fs.promises.realpath(file),
+        tempPath(dir, file, proto_path)
+      );
     }
   }
 
