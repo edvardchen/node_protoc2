@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/edvardchen/node_protoc2/compare/v1.2.0...v1.3.0) (2021-03-25)
+
+
+### Features
+
+* add legacy_grpc option ([5c2734a](https://github.com/edvardchen/node_protoc2/commit/5c2734a6c7289698d15116cf5c305aa5f84fc92f))
+
+
+### Bug Fixes
+
+* read content from symbolic file ([ebb0278](https://github.com/edvardchen/node_protoc2/commit/ebb02786fed2120f6b0a4c10c791aab536b06656))
+
 ## [1.2.0](https://github.com/edvardchen/node_protoc2/compare/v1.1.1...v1.2.0) (2021-03-24)
 
 
