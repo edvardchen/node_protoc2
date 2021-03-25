@@ -7,6 +7,7 @@ import path from 'path';
 import log from './utils/log';
 
 type Options = {
+  legacy_grpc?: boolean;
   out_dir: string;
   proto_files: string[];
   proto_path?: string;
@@ -19,7 +20,12 @@ function tempPath(temp_dir: string, file: string, proto_path?: string) {
 /**
  * main
  */
-export default async ({ proto_files, out_dir, proto_path }: Options) => {
+export default async ({
+  proto_files,
+  out_dir,
+  proto_path,
+  legacy_grpc,
+}: Options) => {
   const dir = await promisify(tmp.dir)();
 
   if (proto_path) {
@@ -42,6 +48,7 @@ export default async ({ proto_files, out_dir, proto_path }: Options) => {
   const files = await Promise.all(jobs);
 
   return compile({
+    legacy_grpc,
     proto_files: files,
     out_dir,
     proto_path: dir,
@@ -55,7 +62,12 @@ export default async ({ proto_files, out_dir, proto_path }: Options) => {
 //   --ts_out="service=grpc-node,mode=grpc-js:${OUT_DIR}" \
 //   --grpc_out="grpc_js:${OUT_DIR}" \
 //   ...
-async function compile({ proto_files, out_dir, proto_path }: Options) {
+async function compile({
+  proto_files,
+  legacy_grpc,
+  out_dir,
+  proto_path,
+}: Options) {
   const PROTOC_GEN_TS_PATH = require.resolve('ts-protoc-gen/bin/protoc-gen-ts');
   const GRPC_TOOLS_PATH = require.resolve('grpc-tools/bin/protoc.js');
   const args = [
@@ -63,8 +75,10 @@ async function compile({ proto_files, out_dir, proto_path }: Options) {
     proto_path && `--proto_path=${proto_path}`,
     `--plugin="protoc-gen-ts=${PROTOC_GEN_TS_PATH}"`,
     `--js_out="import_style=commonjs,binary:${out_dir}"`,
-    `--ts_out="service=grpc-node,mode=grpc-js:${out_dir}"`,
-    `--grpc_out="grpc_js:${out_dir}"`,
+    `--ts_out="service=grpc-node${
+      !legacy_grpc ? ',mode=grpc-js' : ''
+    }:${out_dir}"`,
+    `--grpc_out="${!legacy_grpc ? 'grpc_js:' : ''}${out_dir}"`,
     ...proto_files,
   ].filter(Boolean);
   const command = args.join(' ');
