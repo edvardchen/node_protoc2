@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/edvardchen/node_protoc2/compare/v1.3.0...v1.4.0) (2021-04-22)
+
+
+### Features
+
+* make our command behave similarly to protoc ([c437357](https://github.com/edvardchen/node_protoc2/commit/c43735714fd96b1bf5402b82f13580400bd78f46))
+* support mulitiple -I ([a9b9697](https://github.com/edvardchen/node_protoc2/commit/a9b96977375506abf18da4c2e21350fef3f8e065))
+
 ## [1.3.0](https://github.com/edvardchen/node_protoc2/compare/v1.2.0...v1.3.0) (2021-03-25)
 
 
