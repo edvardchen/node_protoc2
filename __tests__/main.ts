@@ -6,7 +6,7 @@ describe('node_protoc_2', () => {
   it('compile long field into string type', async () => {
     await compile({
       proto_files: [path.resolve(fixturePath, './greeter.proto')],
-      proto_path: fixturePath,
+      proto_paths: [fixturePath],
       out_dir: fixturePath + '/.generated',
     });
   });
@@ -14,7 +14,7 @@ describe('node_protoc_2', () => {
   it('proto import another', async () => {
     await compile({
       proto_files: [path.resolve(fixturePath, './complex.proto')],
-      proto_path: fixturePath,
+      proto_paths: [fixturePath],
       out_dir: fixturePath + '/.generated',
     });
   });

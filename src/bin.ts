@@ -9,13 +9,14 @@ import compile from '.';
 //   --grpc_out="grpc_js:${OUT_DIR}" \
 //   ...
 // out_dir required, default value just to pass type-checking
-const { proto_path, out_dir = '', legacy_grpc, _: files } = yargs
+const { proto_path = [], out_dir = '', legacy_grpc, _: files } = yargs
   .usage('node_protoc2 --out_dir output_folder foo.proto')
   .demandCommand(1, 'no protobuf files specified')
   .option('proto_path', {
     alias: 'I',
-    type: 'string',
-    description: 'the root of your project',
+    string: true,
+    type: 'array',
+    description: 'the folders to search proto files',
   })
   .options('legacy_grpc', {
     type: 'boolean',
@@ -28,4 +29,9 @@ const { proto_path, out_dir = '', legacy_grpc, _: files } = yargs
     description: 'output directory for generated files',
   }).argv;
 
-compile({ proto_files: files as string[], proto_path, out_dir, legacy_grpc });
+compile({
+  proto_files: files as string[],
+  proto_paths: proto_path,
+  out_dir,
+  legacy_grpc,
+});
