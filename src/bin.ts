@@ -10,6 +10,12 @@ import compile from '.';
 //   ...
 // out_dir required, default value just to pass type-checking
 const { proto_path = [], out_dir = '', legacy_grpc, _: files } = yargs
+  .parserConfiguration({
+    // make our command behave similarly to protoc
+    // If users want to specify multiple proto paths, they must pass multiple path WITH THE SAME KEY
+    // BTW, it's difficult to find this option https://github.com/yargs/yargs-parser#greedy-arrays
+    'greedy-arrays': false,
+  })
   .usage('node_protoc2 --out_dir output_folder foo.proto')
   .demandCommand(1, 'no protobuf files specified')
   .option('proto_path', {
