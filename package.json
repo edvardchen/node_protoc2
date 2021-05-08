@@ -1,6 +1,6 @@
 {
   "name": "node_protoc2",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Compile int64 to string when generating static code for protobuf in JavaScript",
   "bin": "bin.js",
   "main": "lib/index.js",

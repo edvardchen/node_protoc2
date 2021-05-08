@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.1](https://github.com/edvardchen/node_protoc2/compare/v1.4.0...v1.4.1) (2021-05-08)
+
+
+### Bug Fixes
+
+* capture unhandledRejection and exit with failure ([d83df21](https://github.com/edvardchen/node_protoc2/commit/d83df21607cd5ba3c8b187050f36fcc6e5f3af50))
+
 ## [1.4.0](https://github.com/edvardchen/node_protoc2/compare/v1.3.0...v1.4.0) (2021-04-22)
 
 
