@@ -40,4 +40,7 @@ compile({
   proto_paths: proto_path,
   out_dir,
   legacy_grpc,
+}).catch((e) => {
+  console.error(e);
+  process.exit(1);
 });

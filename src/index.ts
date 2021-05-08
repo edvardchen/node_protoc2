@@ -73,7 +73,7 @@ export default async ({
       }
       if (!target) {
         throw new Error(
-          `File ${file} not included in any proto path or outside of cwd`
+          `File ${file} not included in any proto path or outside of cwd ${process.cwd()}`
         );
       }
 
